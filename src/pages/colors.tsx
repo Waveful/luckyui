@@ -102,8 +102,18 @@ export default function ColorsPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-2">
-                          {Object.entries(values).map(([step, hex]) => (
+                        <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-10 gap-2">
+                          {Object.entries(values)
+                            .sort(([a], [b]) => {
+                              // Sort numerically if both are numbers
+                              const numA = Number(a);
+                              const numB = Number(b);
+                              if (!isNaN(numA) && !isNaN(numB)) {
+                                return numA - numB;
+                              }
+                              return a.localeCompare(b);
+                            })
+                            .map(([step, hex]) => (
                             <div
                               key={step}
                               className="text-center"
